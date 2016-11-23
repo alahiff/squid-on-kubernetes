@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: squid
+  name: squid
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: squid
+    spec:
+      containers:
+        - name: squid
+          image: alahiff/squid:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "4.0Gi"
+              cpu: "1000m"
+          env:
+          - name: SQUID_CACHE_SIZE
+            value: "70000"
+          - name: SQUID_CACHE_MEM
+            value: "2048"
+          ports:
+          - containerPort: 3128
+            protocol: TCP
+          volumeMounts:
+            - mountPath: /var/cache/squid
+              name: squid-cache
+            - mountPath: /var/log/squid
+              name: squid-log
+          livenessProbe:
+            tcpSocket:
+              port: 3128
+            initialDelaySeconds: 40
+            timeoutSeconds: 4
+      volumes:
+        - name: squid-cache
+          emptyDir: {}
+        - name: squid-log
+          emptyDir: {}
