@@ -1,6 +1,10 @@
 # CVMFS/Frontier squid on Kubernetes
-
-We use a deployment to specify that a certain number of squid instances should be running (replace the image name if necessary):
+Build the image
+```
+docker build -t squid .
+```
+then push to a repository and adjust the image name in `squid-deployment.yaml` as appropriate.
+We use a deployment to specify that a certain number of squid instances should be running:
 ```
 kubectl create -f squid-deployment.yaml
 ```
