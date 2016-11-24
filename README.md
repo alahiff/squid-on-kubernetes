@@ -14,7 +14,7 @@ kubectl create -f squid-service.yaml
 ````
 which enables the squid(s) to be accessed from within the Kubernetes cluster at `http://squid:3128`.
 
-A quick check to see that everything is working as expected:
+A quick check to see that everything is working as expected, in particular that the appropriate number of squid pods are running:
 ```
 $ kubectl get deployments,pods,services
 NAME              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
