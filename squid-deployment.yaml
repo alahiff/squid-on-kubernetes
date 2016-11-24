@@ -19,6 +19,9 @@ spec:
             requests:
               memory: "4.0Gi"
               cpu: "1000m"
+            limits:
+              memory: "4.0Gi"
+              cpu: "1000m"
           env:
           - name: SQUID_CACHE_SIZE
             value: "70000"
