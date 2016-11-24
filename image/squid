@@ -1,0 +1,2 @@
+8 * * * * /usr/local/bin/squid-log-rotate.sh rotateiflarge >& /dev/null
+7 7 * * * /usr/local/bin/squid-log-rotate.sh rotate >& /dev/null
