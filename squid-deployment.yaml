@@ -1,47 +1,23 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: nginx-deployment
   labels:
-    app: squid
-  name: squid
+    app: nginx
 spec:
-  replicas: 1
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
   template:
     metadata:
       labels:
-        app: squid
+        app: nginx
     spec:
       containers:
-        - name: squid
-          image: alahiff/squid:latest
-          imagePullPolicy: Always
-          resources:
-            requests:
-              memory: "4.0Gi"
-              cpu: "1000m"
-            limits:
-              memory: "4.0Gi"
-              cpu: "1000m"
-          env:
-          - name: SQUID_CACHE_SIZE
-            value: "70000"
-          - name: SQUID_CACHE_MEM
-            value: "2048"
-          ports:
-          - containerPort: 3128
-            protocol: TCP
-          volumeMounts:
-            - mountPath: /var/cache/squid
-              name: squid-cache
-            - mountPath: /var/log/squid
-              name: squid-log
-          livenessProbe:
-            tcpSocket:
-              port: 3128
-            initialDelaySeconds: 40
-            timeoutSeconds: 4
-      volumes:
-        - name: squid-cache
-          emptyDir: {}
-        - name: squid-log
-          emptyDir: {}
+      - name: nginx
+        image: nginx
+        env:
+        - name: http_proxy
+          value: "http://10.128.0.12:3128"
+        ports:
